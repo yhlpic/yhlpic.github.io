@@ -1,0 +1,60 @@
+:root{--paper:#fff;--ink:#000;--gap:clamp(8px,1.4vw,40px);--type-scale:calc(100vw / 2922);--line-pitch:calc(123 * var(--type-scale));--depth-five:clamp(18px,1.458333vw,34px);--depth-four:clamp(10px,.78125vw,18px);color-scheme:light}
+:root[data-theme="dark"]{--paper:#000;--ink:#fff;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scrollbar-width:none}
+html::-webkit-scrollbar{display:none}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,serif}
+button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;border-radius:0;padding:0}
+a{color:inherit}
+button:focus-visible,a:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+img{display:block;max-width:100%;user-select:none;-webkit-user-drag:none}
+svg{display:block}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.filter-definitions{position:absolute;width:0;height:0;pointer-events:none}
+.image-ink{filter:url(#ink-alpha)}
+[data-theme="dark"] .image-ink{filter:url(#ink-alpha) invert(1)}
+.masthead{position:fixed;left:0;top:0;z-index:10;width:100%;pointer-events:none}
+.type-row{position:relative;height:var(--line-pitch);pointer-events:none}
+.line-art{display:block;width:calc(var(--row-width) * var(--type-scale));height:calc(95 * var(--type-scale));overflow:visible;pointer-events:none}
+.intro-row .line-art,.photography-row .line-art,.about-row .line-art{clip-path:inset(0 calc(100% - var(--prefix-width) * var(--type-scale)) 0 0)}
+.about-open .line-art{clip-path:none}
+.base-control{display:block;position:absolute;left:0;top:0;width:calc(var(--prefix-width) * var(--type-scale));height:calc(95 * var(--type-scale));pointer-events:auto}
+.contact-row{display:none}
+.about-open .contact-row{display:block}
+.contact{position:absolute;left:0;top:0;width:calc(var(--row-width) * var(--type-scale));height:calc(95 * var(--type-scale));pointer-events:auto}
+#top{padding-top:calc(343 * var(--type-scale))}
+#gallery{display:flex;flex-direction:column;gap:var(--gap);padding-bottom:var(--gap);transform-origin:center top}
+.project{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap);align-items:start}
+.photo{display:block;position:relative;width:100%;isolation:isolate;aspect-ratio:var(--ratio);cursor:zoom-in}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}
+/* Both the middle and edges of each photograph belong to the distant plane. */
+.modal-open #gallery{filter:blur(var(--depth-five))}
+.viewer-open .masthead{filter:blur(var(--depth-four));pointer-events:none}
+.viewer-open .masthead *{pointer-events:none}
+dialog{position:fixed;inset:0;width:100%;height:100%;width:100dvw;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:transparent;color:var(--ink);overflow:hidden;overscroll-behavior:contain}
+dialog::backdrop{background:transparent}
+.viewer-stage{position:relative;width:100%;height:100%;padding:0;display:grid;place-items:center;touch-action:none;cursor:zoom-out}
+#enlarged{width:auto;height:auto;max-width:100%;max-height:100%;max-height:100dvh;object-fit:contain;cursor:default}
+.arrow,.close-control{position:absolute;z-index:3;display:grid;place-items:center;width:48px;height:48px;color:var(--ink);filter:drop-shadow(0 0 2px var(--paper)) drop-shadow(0 0 3px var(--paper));cursor:pointer}
+.arrow{top:calc(50% - 24px)}
+.arrow svg{width:32px;height:32px}
+.previous{left:max(8px,env(safe-area-inset-left))}.next{right:max(8px,env(safe-area-inset-right))}
+.close-control{top:max(4px,env(safe-area-inset-top));right:max(4px,env(safe-area-inset-right))}
+.close-control svg{width:26px;height:26px}
+.arrow path,.close-control path{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.viewer-controls{position:absolute;inset:0;margin:0;padding:0;background:transparent;pointer-events:none}
+#viewer .viewer-controls button{width:44px;height:44px;margin:0;padding:0;background:transparent;border:0;box-shadow:none;align-items:center;pointer-events:auto;opacity:1}
+#viewer .viewer-controls .arrow{top:50%;bottom:auto;transform:translateY(-50%)}
+#viewer .previous{left:0;justify-items:start}
+#viewer .next{left:auto;right:0;justify-items:end}
+#viewer .viewer-controls .close-control{top:0;bottom:auto;left:auto;right:0;align-items:start;justify-items:end}
+#viewer .arrow svg,#viewer .close-control svg{width:26px;height:26px}
+#about{cursor:zoom-out}
+#about .masthead{cursor:default}
+#about .close-control{position:fixed;top:auto;bottom:max(8px,env(safe-area-inset-bottom))}
+@media(max-width:600px){.arrow{width:44px;height:44px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+#viewer{touch-action:none}
+#viewer:focus{outline:none}
