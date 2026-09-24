@@ -520,15 +520,6 @@ window.PHOTO_PROJECTS = [
         "sourceName": "Aaron and Laura 2.jpg"
       },
       {
-        "id": "aaron-and-laura-3",
-        "src": "assets/photos/aaron-laura/Aaron and Laura 3.webp",
-        "thumb": "assets/photos/aaron-laura/Aaron and Laura 3-thumb.webp",
-        "alt": "Aaron and Laura 3",
-        "width": 1600,
-        "height": 2400,
-        "sourceName": "Aaron and Laura 3.jpg"
-      },
-      {
         "id": "aaron-and-laura-4",
         "src": "assets/photos/aaron-laura/Aaron and Laura 4.webp",
         "thumb": "assets/photos/aaron-laura/Aaron and Laura 4-thumb.webp",
@@ -536,15 +527,6 @@ window.PHOTO_PROJECTS = [
         "width": 1600,
         "height": 2400,
         "sourceName": "Aaron and Laura 4.jpg"
-      },
-      {
-        "id": "aaron-and-laura-movie",
-        "src": "assets/photos/aaron-laura/Aaron and Laura Movie.webp",
-        "thumb": "assets/photos/aaron-laura/Aaron and Laura Movie-thumb.webp",
-        "alt": "Aaron and Laura Movie",
-        "width": 1080,
-        "height": 1920,
-        "sourceName": "Aaron and Laura Movie.jpg"
       },
       {
         "id": "laura-bday-gift",
