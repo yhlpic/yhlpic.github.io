@@ -76,6 +76,10 @@
 
     if ('PointerEvent' in window) {
       listen('pointerdown', event => {
+        if (handlers.ignoreMouse && event.pointerType === 'mouse') {
+          ignoreGestureClick = false;
+          return;
+        }
         if (!element.open || (event.pointerType === 'mouse' && (event.button !== 0 || event.isPrimary === false))) return;
         if (!pointers.size) begin(event.pointerId, point(event), event.target);
         pointers.add(event.pointerId);

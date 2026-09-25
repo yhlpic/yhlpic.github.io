@@ -19,6 +19,7 @@
   const track = document.querySelector('#photo-track');
   const previousPhoto = document.querySelector('#previous-photo');
   const nextPhoto = document.querySelector('#next-photo');
+  const nearbyImages = new Map();
   let sliding = false;
   let slideAnimation = null;
   const sequence = [];
@@ -82,7 +83,7 @@
   }
   function showPhoto(index) {
     if (!sequence.length) return;
-    current = (index + sequence.length) % sequence.length;
+    current = ((index % sequence.length) + sequence.length) % sequence.length;
     const photo = sequence[current];
     for (const [image, offset] of [[previousPhoto, -1], [enlarged, 0], [nextPhoto, 1]]) {
       const item = sequence[(current + offset + sequence.length) % sequence.length];
@@ -95,12 +96,28 @@
     viewer.dataset.project = photo.projectId;
     document.querySelector('#photo-status').textContent = `${photo.project}, photograph ${current + 1} of ${sequence.length}`;
   }
+  function prepareNearbyPhotos() {
+    const wanted = new Set();
+    for (let offset = -4; offset <= 4; offset++) {
+      const index = (current + offset + sequence.length) % sequence.length;
+      const source = sequence[index].src;
+      wanted.add(source);
+      if (!nearbyImages.has(source)) {
+        const image = new Image();
+        image.src = source;
+        nearbyImages.set(source, image);
+      }
+    }
+    for (const source of nearbyImages.keys()) {
+      if (!wanted.has(source)) nearbyImages.delete(source);
+    }
+  }
   const translation = (axis, offset) => axis === 'y' ? `translate3d(0,${offset}px,0)` : `translate3d(${offset}px,0,0)`;
   function resetSlide() {
     if (slideAnimation) slideAnimation.cancel();
     slideAnimation = null;
     track.style.transform = '';
-    viewer.classList.remove('dragging');
+    viewer.classList.remove('dragging', 'scrubbing');
     sliding = false;
   }
   function moveSlide(axis, offset) {
@@ -133,6 +150,7 @@
   function openPhoto(index, trigger) {
     resetSlide();
     viewer.dataset.slideAxis = 'x';
+    delete viewer.dataset.cursorDirection;
     lockPage(trigger);
     document.body.classList.add('viewer-open');
     lastWheel = 0;
@@ -199,7 +217,37 @@
     wheelTotal = 0;
     lastWheel = now;
   }, {passive:false});
+  function pointToPhotoDirection(x) {
+    const bounds = enlarged.getBoundingClientRect();
+    const direction = x < bounds.left + bounds.width / 2 ? -1 : 1;
+    viewer.dataset.cursorDirection = direction < 0 ? 'previous' : 'next';
+    return direction;
+  }
+  viewer.addEventListener('pointermove', event => {
+    if (event.pointerType === 'mouse' && event.target === enlarged) pointToPhotoDirection(event.clientX);
+  });
+  window.attachDesktopPhotoScrub(viewer, {
+    onStart({target, x}) {
+      if (target !== enlarged || sliding) return false;
+      pointToPhotoDirection(x);
+      viewer.classList.add('dragging', 'scrubbing');
+      prepareNearbyPhotos();
+      return true;
+    },
+    onStep(delta) {
+      showPhoto(current + delta);
+      prepareNearbyPhotos();
+    },
+    onEnd() { resetSlide(); },
+    onCancel() { resetSlide(); },
+    onClick({x}) {
+      if (!viewer.open || sliding) return;
+      showPhoto(current + pointToPhotoDirection(x));
+      prepareNearbyPhotos();
+    }
+  });
   window.attachPhotoGestures(viewer, {
+    ignoreMouse: true,
     onStart() {
       if (sliding) return false;
       viewer.classList.add('dragging');
