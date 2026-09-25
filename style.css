@@ -44,6 +44,7 @@ dialog::backdrop{background:transparent}
 #viewer[data-slide-axis="y"] .previous-slide{transform:translateY(-100%)}
 #viewer[data-slide-axis="y"] .next-slide{transform:translateY(100%)}
 #viewer.dragging .viewer-slide img{cursor:grabbing}
+@media(hover:hover) and (pointer:fine){.viewer-slide img,#viewer.dragging .viewer-slide img{cursor:ew-resize}}
 #about{cursor:zoom-out}
 #about .masthead{cursor:default}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
