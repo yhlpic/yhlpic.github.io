@@ -16,6 +16,11 @@
   const viewer = document.querySelector('#viewer');
   const about = document.querySelector('#about');
   const enlarged = document.querySelector('#enlarged');
+  const track = document.querySelector('#photo-track');
+  const previousPhoto = document.querySelector('#previous-photo');
+  const nextPhoto = document.querySelector('#next-photo');
+  let sliding = false;
+  let slideAnimation = null;
   const sequence = [];
   let current = -1;
   let returnFocus = null;
@@ -79,20 +84,55 @@
     if (!sequence.length) return;
     current = (index + sequence.length) % sequence.length;
     const photo = sequence[current];
-    enlarged.src = photo.src;
-    enlarged.alt = photo.alt || photo.project;
-    enlarged.width = photo.width;
-    enlarged.height = photo.height;
+    for (const [image, offset] of [[previousPhoto, -1], [enlarged, 0], [nextPhoto, 1]]) {
+      const item = sequence[(current + offset + sequence.length) % sequence.length];
+      image.src = item.src;
+      image.alt = offset === 0 ? item.alt || item.project : '';
+      image.width = item.width;
+      image.height = item.height;
+    }
     viewer.dataset.index = current;
     viewer.dataset.project = photo.projectId;
     document.querySelector('#photo-status').textContent = `${photo.project}, photograph ${current + 1} of ${sequence.length}`;
-    for (const offset of [-1, 1]) {
-      const next = sequence[(current + offset + sequence.length) % sequence.length];
-      const preload = new Image();
-      preload.src = next.src;
+  }
+  const translation = (axis, offset) => axis === 'y' ? `translate3d(0,${offset}px,0)` : `translate3d(${offset}px,0,0)`;
+  function resetSlide() {
+    if (slideAnimation) slideAnimation.cancel();
+    slideAnimation = null;
+    track.style.transform = '';
+    viewer.classList.remove('dragging');
+    sliding = false;
+  }
+  function moveSlide(axis, offset) {
+    viewer.dataset.slideAxis = axis;
+    track.style.transform = translation(axis, offset);
+  }
+  function navigatePhoto(delta, axis = 'x', offset = 0) {
+    if (!viewer.open || sliding) return;
+    viewer.classList.remove('dragging');
+    moveSlide(axis, offset);
+    if ((!delta && !offset) || reducedMotion.matches) {
+      if (delta) showPhoto(current + delta);
+      resetSlide();
+      return;
     }
+    sliding = true;
+    const distance = axis === 'y' ? viewer.clientHeight : viewer.clientWidth;
+    const target = delta ? -Math.sign(delta) * distance : 0;
+    const animation = track.animate([
+      {transform: translation(axis, offset)},
+      {transform: translation(axis, target)}
+    ], {duration: delta ? 240 : 160, easing: 'cubic-bezier(.22,.61,.36,1)', fill: 'forwards'});
+    slideAnimation = animation;
+    animation.onfinish = () => {
+      if (slideAnimation !== animation) return;
+      if (delta) showPhoto(current + delta);
+      resetSlide();
+    };
   }
   function openPhoto(index, trigger) {
+    resetSlide();
+    viewer.dataset.slideAxis = 'x';
     lockPage(trigger);
     document.body.classList.add('viewer-open');
     lastWheel = 0;
@@ -126,6 +166,7 @@
   });
   for (const dialog of [viewer,about]) {
     dialog.addEventListener('close', () => {
+      if (dialog === viewer) resetSlide();
       if (dialog === about) {
         document.querySelector('#top').before(masthead);
         masthead.querySelector('.about-trigger').setAttribute('aria-expanded','false');
@@ -133,32 +174,41 @@
       if (document.body.classList.contains('modal-open')) unlockPage();
     });
     dialog.addEventListener('click', event => {
-      if (event.target === dialog || event.target.classList.contains('viewer-stage')) closeModal(dialog);
+      if (event.target === dialog || event.target.matches('.viewer-stage,.viewer-track,.viewer-slide')) closeModal(dialog);
     });
-    dialog.querySelector('.close-control').addEventListener('click', () => closeModal(dialog));
   }
-  viewer.querySelector('.previous').addEventListener('click', () => showPhoto(current - 1));
-  viewer.querySelector('.next').addEventListener('click', () => showPhoto(current + 1));
+  viewer.querySelector('.viewer-dismiss').addEventListener('click', () => closeModal(viewer));
   viewer.addEventListener('keydown', event => {
     if (['ArrowLeft','ArrowUp','ArrowRight','ArrowDown'].includes(event.key)) {
       event.preventDefault();
-      showPhoto(current + (['ArrowLeft','ArrowUp'].includes(event.key) ? -1 : 1));
+      if (viewer.classList.contains('dragging')) return;
+      navigatePhoto(['ArrowLeft','ArrowUp'].includes(event.key) ? -1 : 1, ['ArrowUp','ArrowDown'].includes(event.key) ? 'y' : 'x');
     }
   });
   viewer.addEventListener('wheel', event => {
     if (event.ctrlKey) return;
     event.preventDefault();
+    if (sliding || viewer.classList.contains('dragging')) return;
     const now = performance.now();
     const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1);
     if (now - lastWheelEvent > 180 || Math.sign(delta) !== Math.sign(wheelTotal)) wheelTotal = 0;
     lastWheelEvent = now;
     wheelTotal += delta;
     if (Math.abs(wheelTotal) < 28 || now - lastWheel < 350) return;
-    showPhoto(current + Math.sign(wheelTotal));
+    navigatePhoto(Math.sign(wheelTotal), 'y');
     wheelTotal = 0;
     lastWheel = now;
   }, {passive:false});
-  window.attachPhotoGestures(viewer, delta => showPhoto(current + delta));
+  window.attachPhotoGestures(viewer, {
+    onStart() {
+      if (sliding) return false;
+      viewer.classList.add('dragging');
+      return true;
+    },
+    onMove({axis, offset}) { moveSlide(axis, offset); },
+    onEnd({axis, offset, delta}) { navigatePhoto(delta, axis, offset); },
+    onCancel() { resetSlide(); }
+  });
   about.addEventListener('wheel', event => event.preventDefault(), {passive:false});
   const instagram = document.querySelector('.instagram');
   instagram.addEventListener('click', event => {
