@@ -1,5 +1,9 @@
 (() => {
   'use strict';
+  const root = document.documentElement;
+  root.dataset.focusInput = 'pointer';
+  document.addEventListener('pointerdown', () => { root.dataset.focusInput = 'pointer'; }, true);
+  document.addEventListener('keydown', () => { root.dataset.focusInput = 'keyboard'; }, true);
   const shuffle = items => {
     const result = [...items];
     for (let i = result.length - 1; i > 0; i--) {
