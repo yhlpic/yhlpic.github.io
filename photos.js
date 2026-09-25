@@ -547,5 +547,74 @@ window.PHOTO_PROJECTS = [
         "sourceName": "Aaron and Laura 5.jpg"
       }
     ]
+  },
+  {
+    "id": "p1",
+    "name": "P1",
+    "photos": [
+      {
+        "id": "p1-001",
+        "src": "assets/photos/p1/P1_001.webp",
+        "thumb": "assets/photos/p1/P1_001-thumb.webp",
+        "width": 1800,
+        "height": 2400,
+        "alt": "P1_001",
+        "sourceName": "P1_001.jpg"
+      },
+      {
+        "id": "p1-002",
+        "src": "assets/photos/p1/P1_002.webp",
+        "thumb": "assets/photos/p1/P1_002-thumb.webp",
+        "width": 1800,
+        "height": 2400,
+        "alt": "P1_002",
+        "sourceName": "P1_002.jpg"
+      },
+      {
+        "id": "p1-003",
+        "src": "assets/photos/p1/P1_003.webp",
+        "thumb": "assets/photos/p1/P1_003-thumb.webp",
+        "width": 1800,
+        "height": 2400,
+        "alt": "P1_003",
+        "sourceName": "P1_003.jpg"
+      },
+      {
+        "id": "p1-004",
+        "src": "assets/photos/p1/P1_004.webp",
+        "thumb": "assets/photos/p1/P1_004-thumb.webp",
+        "width": 1801,
+        "height": 2400,
+        "alt": "P1_004",
+        "sourceName": "P1_004.jpg"
+      },
+      {
+        "id": "p1-005",
+        "src": "assets/photos/p1/P1_005.webp",
+        "thumb": "assets/photos/p1/P1_005-thumb.webp",
+        "width": 2400,
+        "height": 1600,
+        "alt": "P1_005",
+        "sourceName": "P1_005.jpg"
+      },
+      {
+        "id": "p1-006",
+        "src": "assets/photos/p1/P1_006.webp",
+        "thumb": "assets/photos/p1/P1_006-thumb.webp",
+        "width": 2400,
+        "height": 1600,
+        "alt": "P1_006",
+        "sourceName": "P1_006.JPG"
+      },
+      {
+        "id": "p1-007",
+        "src": "assets/photos/p1/P1_007.webp",
+        "thumb": "assets/photos/p1/P1_007-thumb.webp",
+        "width": 2400,
+        "height": 1600,
+        "alt": "P1_007",
+        "sourceName": "P1_007.JPG"
+      }
+    ]
   }
 ];

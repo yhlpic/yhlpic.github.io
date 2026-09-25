@@ -48,3 +48,12 @@
 | :---: | :---: |
 | <a href="./aaron-laura/Aaron%20and%20Laura%202.webp"><img src="./aaron-laura/Aaron%20and%20Laura%202-thumb.webp" alt="Aaron and Laura 2.jpg" width="220"></a><br><a href="./aaron-laura/Aaron%20and%20Laura%202.webp">Aaron and Laura 2.jpg</a> | <a href="./aaron-laura/Aaron%20and%20Laura%204.webp"><img src="./aaron-laura/Aaron%20and%20Laura%204-thumb.webp" alt="Aaron and Laura 4.jpg" width="220"></a><br><a href="./aaron-laura/Aaron%20and%20Laura%204.webp">Aaron and Laura 4.jpg</a> |
 | <a href="./aaron-laura/Aaron%20and%20Laura%205.webp"><img src="./aaron-laura/Aaron%20and%20Laura%205-thumb.webp" alt="Aaron and Laura 5.jpg" width="220"></a><br><a href="./aaron-laura/Aaron%20and%20Laura%205.webp">Aaron and Laura 5.jpg</a> | <a href="./aaron-laura/Laura%20bday%20gift.webp"><img src="./aaron-laura/Laura%20bday%20gift-thumb.webp" alt="Laura bday gift.jpg" width="220"></a><br><a href="./aaron-laura/Laura%20bday%20gift.webp">Laura bday gift.jpg</a> |
+
+## P1 (7장)
+
+| 사진 | 사진 |
+| :---: | :---: |
+| <a href="./p1/P1_001.webp"><img src="./p1/P1_001-thumb.webp" alt="P1_001.jpg" width="220"></a><br><a href="./p1/P1_001.webp">P1_001.jpg</a> | <a href="./p1/P1_002.webp"><img src="./p1/P1_002-thumb.webp" alt="P1_002.jpg" width="220"></a><br><a href="./p1/P1_002.webp">P1_002.jpg</a> |
+| <a href="./p1/P1_003.webp"><img src="./p1/P1_003-thumb.webp" alt="P1_003.jpg" width="220"></a><br><a href="./p1/P1_003.webp">P1_003.jpg</a> | <a href="./p1/P1_004.webp"><img src="./p1/P1_004-thumb.webp" alt="P1_004.jpg" width="220"></a><br><a href="./p1/P1_004.webp">P1_004.jpg</a> |
+| <a href="./p1/P1_005.webp"><img src="./p1/P1_005-thumb.webp" alt="P1_005.jpg" width="220"></a><br><a href="./p1/P1_005.webp">P1_005.jpg</a> | <a href="./p1/P1_006.webp"><img src="./p1/P1_006-thumb.webp" alt="P1_006.JPG" width="220"></a><br><a href="./p1/P1_006.webp">P1_006.JPG</a> |
+| <a href="./p1/P1_007.webp"><img src="./p1/P1_007-thumb.webp" alt="P1_007.JPG" width="220"></a><br><a href="./p1/P1_007.webp">P1_007.JPG</a> |  |
