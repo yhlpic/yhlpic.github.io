@@ -616,5 +616,38 @@ window.PHOTO_PROJECTS = [
         "sourceName": "P1_007.JPG"
       }
     ]
+  },
+  {
+    "id": "jooho-wedding",
+    "name": "JH & WH",
+    "photos": [
+      {
+        "id": "jooho-wedding-001",
+        "src": "assets/photos/jooho-wedding/JH&WH (1).webp",
+        "thumb": "assets/photos/jooho-wedding/JH&WH (1)-thumb.webp",
+        "width": 1084,
+        "height": 1448,
+        "alt": "JH&WH (1)",
+        "sourceName": "JH&WH (1).jpeg"
+      },
+      {
+        "id": "jooho-wedding-002",
+        "src": "assets/photos/jooho-wedding/JH&WH (2).webp",
+        "thumb": "assets/photos/jooho-wedding/JH&WH (2)-thumb.webp",
+        "width": 1600,
+        "height": 999,
+        "alt": "JH&WH (2)",
+        "sourceName": "JH&WH (2).jpeg"
+      },
+      {
+        "id": "jooho-wedding-003",
+        "src": "assets/photos/jooho-wedding/JH&WH (3).webp",
+        "thumb": "assets/photos/jooho-wedding/JH&WH (3)-thumb.webp",
+        "width": 1600,
+        "height": 1470,
+        "alt": "JH&WH (3)",
+        "sourceName": "JH&WH (3).jpeg"
+      }
+    ]
   }
 ];
